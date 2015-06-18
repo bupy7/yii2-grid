@@ -1,6 +1,6 @@
 yii2-grid
 =========
-Extended \yii\grid\GridView widget.
+Simple extended \yii\grid\GridView.
 
 Installation
 ------------
@@ -25,7 +25,3 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \bupy7\grid\AutoloadExample::widget(); ?>```
