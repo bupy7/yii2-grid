@@ -41,7 +41,7 @@ class GridView extends \yii\grid\GridView
     /**
      * @var string|false Type of panel. Whether set 'false' then panel don't uses.
      */
-    public $panel = self::PANEL_PRIMARY;
+    public $panel = self::PANEL_DEFAULT;
     /**
      * @var string HTML-template for layout of panel.
      * Allows uses:
@@ -80,6 +80,7 @@ HTML;
      */
     public $panelHeadingTemplate = <<<HTML
     <div class="col-md-12 text-right">{pageSize}</div>
+    <div class="clearfix"></div>
 HTML;
     /**
      * @var boolean Whether set 'true' will be displays footer of panel.
@@ -99,7 +100,7 @@ HTML;
     public $panelFooterTemplate = <<<HTML
     <div class="row">
         <div class="col-md-6">{summary}</div>
-    <div class="col-md-6 text-right">{pager}</div>
+        <div class="col-md-6 text-right">{pager}</div>
     </div>
 HTML;
     /**
