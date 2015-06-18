@@ -9,7 +9,7 @@ use yii\helpers\Html;
  * Simple extended \yii\grid\GridView.
  * 
  * @author Vasilij Belosludcev https://github.com/bupy7
- * @sience 1.0.0
+ * @since 1.0.0
  */
 class GridView extends \yii\grid\GridView
 {

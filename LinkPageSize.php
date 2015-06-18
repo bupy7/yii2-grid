@@ -20,7 +20,7 @@ use yii\data\Pagination;
  * 
  * @author nkovacs https://github.com/nkovacs
  * @author Vasilij Belosludcev https://github.com/bupy7
- * @sience 1.0.0
+ * @since 1.0.0
  */
 class LinkPageSize extends Widget
 {
