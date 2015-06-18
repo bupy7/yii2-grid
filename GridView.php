@@ -165,15 +165,37 @@ HTML;
      */
     public $pageSize = [];
     /**
+     * @var boolean whether the grid table will have a `bordered` style.
+     */
+    public $bordered = false;
+    /**
+     * @var boolean whether the grid table will have a `striped` style.
+     */
+    public $striped = true;
+    /**
+     * @var boolean whether the grid table will highlight row on `hover`.
+     */
+    public $hover = true;
+    /**
      * @inheritdoc
      */
-    public $tableOptions = ['class' => 'table table-striped table-hover table-bordered'];
+    public $tableOptions = [];
     
     /**
      * @inheritdoc
      */
     public function run()
     {
+        Html::addCssClass($this->tableOptions, 'table');
+        if ($this->hover) {
+            Html::addCssClass($this->tableOptions, 'table-hover');
+        }
+        if ($this->bordered) {
+            Html::addCssClass($this->tableOptions, 'table-bordered');
+        }
+        if ($this->striped) {
+            Html::addCssClass($this->tableOptions, 'table-striped');
+        }
         $this->initLayout();
         parent::run();
     }
