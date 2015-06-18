@@ -35,11 +35,17 @@ class TotalColumn extends DataColumn
     const FORMULA_MIN = 5;
     
     /**
-     * @var int|Closure
+     * @var int|Closure `Closure` function or `FORMULA_` constant which will calculate the output of the content.
+     * @example
+     * TotalCount::FORMULA_MAX
+     * or
+     * function($data) {
+     *      return !empty($data) ? count($data) / array_sum($data) : null;
+     * }
      */
-    public $formula = self::FORMULA_SUM;
+    public $footer = self::FORMULA_SUM;
     
-    private $_rows = [];
+    private $_data = [];
     
     /**
      * @inheritdoc
@@ -56,7 +62,7 @@ class TotalColumn extends DataColumn
     public function getDataCellValue($model, $key, $index)
     {
         $value = parent::getDataCellValue($model, $key, $index);
-        $this->_rows[] = $value;
+        $this->_data[] = $value;
         return $value;
     }
     
@@ -65,11 +71,7 @@ class TotalColumn extends DataColumn
      */
     protected function renderFooterCellContent()
     {
-        if ($this->footer !== null) {
-            $footer = $this->footer;
-        } else {
-            $footer = $this->calculateSummary();
-        }
+        $footer = $this->calculateSummary();
         return trim($footer) !== '' ? $footer : $this->grid->emptyCell;
     }
     
@@ -79,27 +81,26 @@ class TotalColumn extends DataColumn
      */
     protected function calculateSummary()
     {
-        if (empty($this->_rows)) {
+        if (empty($this->_data)) {
             return '';
         }
-        $formula = $this->formula;
+        $formula = $this->footer;
         if ($formula instanceof Closure) {
-            return call_user_func($this->formula, $this->_rows);
+            return call_user_func($this->footer, $this->_data);
         }
         switch ($formula) {
             case self::FORMULA_SUM:
-                return array_sum($this->_rows);
+                return array_sum($this->_data);
             case self::FORMULA_COUNT:
-                return count($this->_rows);
+                return count($this->_data);
             case self::FORMULA_AVG:
-                return count($this->_rows) > 0 ? array_sum($this->_rows) / count($$this->_rows) : null;
+                return count($this->_data) > 0 ? array_sum($this->_data) / count($$this->_data) : null;
             case self::FORMULA_MAX:
-                return max($this->_rows);
+                return max($this->_data);
             case self::FORMULA_MIN:
-                return min($this->_rows);
+                return min($this->_data);
         }
         return null;
-    }
-    
+    }  
 }
 
