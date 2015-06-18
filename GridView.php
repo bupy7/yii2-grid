@@ -5,17 +5,41 @@ namespace bupy7\grid;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
+/**
+ * Simple extended \yii\grid\GridView.
+ * 
+ * @author Vasilij Belosludcev https://github.com/bupy7
+ * @sience 1.0.0
+ */
 class GridView extends \yii\grid\GridView
 {
+    /**
+     * Type of panel `default`.
+     */
     const PANEL_DEFAULT = 'panel-default';
+    /**
+     * Type of panel `info`.
+     */
     const PANEL_INFO = 'panel-info';
+    /**
+     * Type of panel `success`.
+     */
     const PANEL_SUCCESS = 'panel-success';
+    /**
+     * Type of panel `danger`.
+     */
     const PANEL_DANGER = 'panel-danger';
+    /**
+     * Type of panel `warning`.
+     */
     const PANEL_WARNING= 'panel-warning';
+    /**
+     * Type of panel `primary`.
+     */
     const PANEL_PRIMARY = 'panel-primary';
        
     /**
-     * @var string|false
+     * @var string|false Type of panel. Whether set 'false' then panel don't uses.
      */
     public $panel = self::PANEL_PRIMARY;
     /**
