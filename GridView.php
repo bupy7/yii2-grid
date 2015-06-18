@@ -220,7 +220,7 @@ HTML;
     public function renderPageSize()
     {
         $pagination = $this->dataProvider->getPagination();
-        if ($pagination === false || $this->dataProvider->getCount() <= 0) {
+        if ($pagination === false) {
             return '';
         }
         /* @var $class LinkPageSizer */
