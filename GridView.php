@@ -264,7 +264,7 @@ HTML;
             if ($value instanceof \Closure) {
                 $value = call_user_func($value, $this);
             }
-            $this->layout = str_replace($key, $value, $this->layout);
+            $this->layout = str_replace("{{$key}}", $value, $this->layout);
         }
     }
     
