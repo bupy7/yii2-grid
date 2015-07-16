@@ -51,7 +51,7 @@ class GridView extends \yii\grid\GridView
      *      - `{items}` - the summary section. See [[renderSummary()]].
      *      - `{summary}` - the summary section. See [[renderSummary()]].
      *      - `{pager}` - the pager. See [[renderPager()]].
-     *      - `{pageSize}` - the page size. See [[renderPageSize]].
+     *      - `{pageSizer}` - the page size. See [[renderPageSizer]].
      *      - `{errors}` - the filter model error summary. See [[renderErrors()]].
      *      - `{sorter}` - the sorter. See [[renderSorter()]].
      * @see http://getbootstrap.com/components/#panels
@@ -73,13 +73,13 @@ HTML;
      *      - `{items}` - the summary section. See [[renderSummary()]].
      *      - `{summary}` - the summary section. See [[renderSummary()]].
      *      - `{pager}` - the pager. See [[renderPager()]].
-     *      - `{pageSize}` - the page size. See [[renderPageSize]].
+     *      - `{pageSizer}` - the page size. See [[renderPageSizer]].
      *      - `{errors}` - the filter model error summary. See [[renderErrors()]].
      *      - `{sorter}` - the sorter. See [[renderSorter()]].
      * @see http://getbootstrap.com/components/#panels-heading
      */
     public $panelHeadingTemplate = <<<HTML
-    <div class="col-md-12 text-right">{pageSize}</div>
+    <div class="col-md-12 text-right">{pageSizer}</div>
     <div class="clearfix"></div>
 HTML;
     /**
@@ -92,7 +92,7 @@ HTML;
      *      - `{items}` - the summary section. See [[renderSummary()]].
      *      - `{summary}` - the summary section. See [[renderSummary()]].
      *      - `{pager}` - the pager. See [[renderPager()]].
-     *      - `{pageSize}` - the page size. See [[renderPageSize]].
+     *      - `{pageSizer}` - the page size. See [[renderPageSizer]].
      *      - `{errors}` - the filter model error summary. See [[renderErrors()]].
      *      - `{sorter}` - the sorter. See [[renderSorter()]].
      * @see http://getbootstrap.com/components/#panels-footer
@@ -161,10 +161,10 @@ HTML;
      */
     public $afterFooter = [];
     /**
-     * @var array the configuration for the page sizer widget. By default, `LinkPageSize` will be
+     * @var array the configuration for the page sizer widget. By default, `LinkPageSizer` will be
      * used to render the page sizer. You can use a different widget class by configuring the "class" element.
      */
-    public $pageSize = [];
+    public $pageSizer = [];
     /**
      * @var boolean whether the grid table will have a `bordered` style.
      */
@@ -207,8 +207,8 @@ HTML;
     public function renderSection($name)
     {
         switch ($name) {
-            case '{pageSize}':
-                return $this->renderPageSize();
+            case '{pageSizer}':
+                return $this->renderPageSizer();
             default:
                 return parent::renderSection($name);
         }
@@ -218,16 +218,16 @@ HTML;
      * Renders the page sizer.
      * @return string the rendering result
      */
-    public function renderPageSize()
+    public function renderPageSizer()
     {
         $pagination = $this->dataProvider->getPagination();
         if ($pagination === false) {
             return '';
         }
         /* @var $class LinkPageSizer */
-        $pageSizer = $this->pageSize;
-        $class = ArrayHelper::remove($pageSizer, 'class', LinkPageSize::className());
-        $pageSizer['pagination'] = $pagination;
+        $pageSizer = $this->pageSizer;
+        $class = ArrayHelper::remove($pageSizer, 'class', LinkPageSizer::className());
+        $pageSizer['pagination'] = clone $pagination;
         $pageSizer['view'] = $this->getView();
 
         return $class::widget($pageSizer);

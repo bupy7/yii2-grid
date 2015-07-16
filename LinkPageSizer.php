@@ -22,7 +22,7 @@ use yii\data\Pagination;
  * @author Vasilij Belosludcev https://github.com/bupy7
  * @since 1.0.0
  */
-class LinkPageSize extends Widget
+class LinkPageSizer extends Widget
 {
     /**
      * @var Pagination the pagination object that this pager is associated with.
@@ -64,14 +64,14 @@ class LinkPageSize extends Widget
      */
     public function run()
     {
-        echo $this->renderPageSizeButtons();
+        echo $this->renderPageSizerButtons();
     }
 
     /**
      * Renders the page buttons.
      * @return string the rendering result
      */
-    protected function renderPageSizeButtons()
+    protected function renderPageSizerButtons()
     {
         if (count($this->availableSizes) === 0) {
             return '';
@@ -81,7 +81,7 @@ class LinkPageSize extends Widget
         $currentPageSize = $this->pagination->getPageSize();
 
         foreach ($this->availableSizes as $size => $label) {
-            $buttons[]=$this->renderPageSizeButton($label, $size, null, $size==$currentPageSize);
+            $buttons[] = $this->renderPageSizeButton($label, $size, null, $size == $currentPageSize);
         }
 
         return Html::tag('ul', implode(PHP_EOL, $buttons), $this->options);
@@ -105,7 +105,11 @@ class LinkPageSize extends Widget
         $linkOptions = $this->linkOptions;
         $linkOptions['data-page-size'] = $pageSize;
 
-        return Html::tag('li', Html::a($label, $this->createUrl($this->pagination, $pageSize), $linkOptions), $options);
+        return Html::tag(
+            'li', 
+            Html::a($label, $this->createUrl($this->pagination, $pageSize), $linkOptions), 
+            $options
+        );
     }
     
     /**
