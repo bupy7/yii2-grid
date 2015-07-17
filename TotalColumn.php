@@ -4,6 +4,7 @@ namespace bupy7\grid;
 
 use Closure;
 use yii\grid\DataColumn;
+use yii\helpers\ArrayHelper;
 
 /**
  * Total column. Adding to last row total formula for all items from this column.
@@ -35,13 +36,23 @@ class TotalColumn extends DataColumn
     const FORMULA_MIN = 5;
     
     /**
-     * @var int|Closure `Closure` function or `FORMULA_` constant which will calculate the output of the content.
-     * @example
+     * @var string|\Closure an anonymous function or a string that is used to calculate formula of the column.
+     * If not set, then will be uses value from [[$value]] property. 
+     * @see $value
+     */
+    public $realValue;
+    /**
+     * @var int|\Closure an anonymous function or `FORMULA_*` constant which will calculate the output of the content.
+     * ~~~
      * TotalCount::FORMULA_MAX
+     * ~~~
+     * 
      * or
+     * ~~~
      * function($data) {
      *      return !empty($data) ? count($data) / array_sum($data) : null;
      * }
+     * ~~~
      */
     public $footer = self::FORMULA_SUM;
     
@@ -61,7 +72,15 @@ class TotalColumn extends DataColumn
      */
     public function getDataCellValue($model, $key, $index)
     {
-        $value = parent::getDataCellValue($model, $key, $index);
+        if (isset($this->realValue)) {
+            if (is_string($this->realValue)) {
+                $value = ArrayHelper::getValue($model, $this->realValue);
+            } else {
+                $value = call_user_func($this->realValue, $model, $key, $index, $this);
+            }
+        } else {
+            $value = parent::getDataCellValue($model, $key, $index);
+        }
         $this->_data[] = $value;
         return $value;
     }
