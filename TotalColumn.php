@@ -104,21 +104,34 @@ class TotalColumn extends DataColumn
         }
         $formula = $this->footer;
         if ($formula instanceof Closure) {
-            return call_user_func($this->footer, $this->_data);
+            $result = call_user_func($this->footer, $this->_data);
+        } else {
+            switch ($formula) {
+                case self::FORMULA_SUM:
+                    $result = array_sum($this->_data);
+                    break;
+
+                case self::FORMULA_COUNT:
+                    $result = count($this->_data);
+                    break;
+
+                case self::FORMULA_AVG:
+                    $result = count($this->_data) > 0 ? array_sum($this->_data) / count($$this->_data) : null;
+                    break;
+
+                case self::FORMULA_MAX:
+                    $result = max($this->_data);
+                    break;
+
+                case self::FORMULA_MIN:
+                    $result = min($this->_data);
+                    break;
+
+                default:
+                    $result = null;
+            }
         }
-        switch ($formula) {
-            case self::FORMULA_SUM:
-                return array_sum($this->_data);
-            case self::FORMULA_COUNT:
-                return count($this->_data);
-            case self::FORMULA_AVG:
-                return count($this->_data) > 0 ? array_sum($this->_data) / count($$this->_data) : null;
-            case self::FORMULA_MAX:
-                return max($this->_data);
-            case self::FORMULA_MIN:
-                return min($this->_data);
-        }
-        return null;
+        return $result;
     }  
 }
 
