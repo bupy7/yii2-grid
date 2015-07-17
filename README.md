@@ -1,6 +1,6 @@
 yii2-grid
 =========
-Simple extended ```yii\grid\GridView```.
+Simple extended ```\yii\grid\GridView```.
 
 **Functional:**
 
