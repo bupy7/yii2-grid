@@ -1,6 +1,16 @@
 yii2-grid
 =========
-Simple extended \yii\grid\GridView.
+Simple extended ```yii\grid\GridView```.
+
+**Functional:**
+
+- Wrapping GridView in [Bootstrap3 Panel](http://getbootstrap.com/components/#panels).
+- Ability changing size of page.
+- Column of 'Total' with ability using custom formulas.
+- Hard-header.
+- Custom tags of template the GridView.
+
+![Screenshot](screenshot.png)
 
 Installation
 ------------
