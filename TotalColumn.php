@@ -74,15 +74,14 @@ class TotalColumn extends DataColumn
     {
         if (isset($this->realValue)) {
             if (is_string($this->realValue)) {
-                $value = ArrayHelper::getValue($model, $this->realValue);
+                $this->_data[] = ArrayHelper::getValue($model, $this->realValue);
             } else {
-                $value = call_user_func($this->realValue, $model, $key, $index, $this);
+                $this->_data[] = call_user_func($this->realValue, $model, $key, $index, $this);
             }
         } else {
-            $value = parent::getDataCellValue($model, $key, $index);
+            $this->_data[] = parent::getDataCellValue($model, $key, $index);
         }
-        $this->_data[] = $value;
-        return $value;
+        return parent::getDataCellValue($model, $key, $index);
     }
     
     /**
