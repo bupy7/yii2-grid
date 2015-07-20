@@ -49,14 +49,15 @@ class TotalColumn extends DataColumn
      * 
      * or
      * ~~~
-     * function($data) {
+     * function($data, $models) {
      *      return !empty($data) ? count($data) / array_sum($data) : null;
      * }
      * ~~~
      */
     public $footer = self::FORMULA_SUM;
     
-    private $_data = [];
+    private $_data = [];   
+    private $_models = [];
     
     /**
      * @inheritdoc
@@ -81,6 +82,7 @@ class TotalColumn extends DataColumn
         } else {
             $this->_data[] = parent::getDataCellValue($model, $key, $index);
         }
+        $this->_models[] = $model;
         return parent::getDataCellValue($model, $key, $index);
     }
     
@@ -104,7 +106,7 @@ class TotalColumn extends DataColumn
         }
         $formula = $this->footer;
         if ($formula instanceof Closure) {
-            $result = call_user_func($this->footer, $this->_data);
+            $result = call_user_func($this->footer, $this->_data, $this->_models);
         } else {
             switch ($formula) {
                 case self::FORMULA_SUM:
