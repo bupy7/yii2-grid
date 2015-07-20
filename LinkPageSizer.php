@@ -7,6 +7,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\base\Widget;
 use yii\data\Pagination;
+use yii\web\Request;
 
 /**
  * LinkPageSizer displays a list of hyperlinks that lead to different page sizes of a target.
