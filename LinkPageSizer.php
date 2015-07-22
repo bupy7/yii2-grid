@@ -33,7 +33,7 @@ class LinkPageSizer extends Widget
     /**
      * @var array available page sizes. Array keys are sizes, values are labels.
      */
-    public $availableSizes = [10 => '10', 20 => '20', 50 => '50'];
+    public $availableSizes = [10 => '10', 20 => '20', 40 => '40'];
     /**
      * @var array HTML attributes for the pager container tag.
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
