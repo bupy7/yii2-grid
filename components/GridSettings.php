@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Component;
 
 /**
+ * Management of grid settings.
  * 
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.0.0
@@ -13,9 +14,9 @@ use yii\base\Component;
 class GridSettings extends Component
 {
     /**
-     * 
-     * @param type $gridId
-     * @param type $columns
+     * Save visible columns settings.
+     * @param mixed $gridId ID of grid.
+     * @param array $columns List of columns.
      */
     public function setVisibleColumns($gridId, $columns)
     {
@@ -23,8 +24,8 @@ class GridSettings extends Component
     }
     
     /**
-     * 
-     * @param type $gridId
+     * Returned visible columns of grid.
+     * @param mixed $gridId ID of grid.
      * @return false|array
      */
     public function getVisibleColumns($gridId)

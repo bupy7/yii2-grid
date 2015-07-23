@@ -7,8 +7,10 @@ use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\di\Instance;
 use bupy7\grid\components\GridSettings;
+use yii\helpers\Url;
 
 /**
+ * Saved settings visible columns of the grid.
  * 
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.0.0
@@ -16,13 +18,21 @@ use bupy7\grid\components\GridSettings;
 class VisibleColumnsAction extends Action
 {    
     /**
-     * @var mixed
+     * @var mixed Uniqal ID of grid. You can uses not only string, but also other types of variable.
+     * Example:
+     * ~~~
+     * 'main-grid'
+     * ~~~
      */
     public $gridId;
     /**
-     * @var mixed
+     * @var array|string|GridSettings the grid settings used for set/get actual visible columns of $gridId.
      */
     public $gridSettings = 'gridSettings';
+    /**
+     * @var mixed URL of redirect. If this property not set, will be used goBack().
+     */
+    public $redirectUrl;
     
     /**
      * @inheritdoc
@@ -35,24 +45,28 @@ class VisibleColumnsAction extends Action
             throw new InvalidConfigException('Property "gridId" and "gridSettings" must be specified.');
         }
         $this->gridSettings = Instance::ensure($this->gridSettings, GridSettings::className());
+        if (!isset($this->redirectUrl)) {
+            $this->redirectUrl = Url::previous();
+        }
     }
     
     /**
-     * 
+     * Saving settings of visible columns. If body params is invalid - redirect.
      * @return mixed
      */
     public function run()
     {
         $params = $this->getBodyParams();
         if (empty($params)) {
-            return $this->controller->goBack();
+            return $this->controller->redirect($this->redirectUrl);
         }
         $this->saveSettings($params);
-        return $this->controller->goBack();
+        return $this->controller->redirect($this->redirectUrl);
     }
     
     /**
-     * @param array $params
+     * Save settings of visible columns to session of user.
+     * @param array $params Body params of request.
      */
     protected function saveSettings($params)
     {
@@ -66,7 +80,7 @@ class VisibleColumnsAction extends Action
     }
     
     /**
-     * 
+     * Returned body params of request.
      * @return array
      */
     protected function getBodyParams()
