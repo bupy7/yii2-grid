@@ -49,7 +49,12 @@ class VisibleColumnsWidget extends Widget
      */
     public $formOptions = [];
     /**
-     * @var array List of available columns in grid.
+     * @var array List of available columns in grid with labels:
+     * Example:
+     * [
+     *      'attribute1' => 'Label of attribute1',
+     *      'attribute2' => 'Label of attribute2',
+     * ]
      */
     public $columnsList = [];
     /**
