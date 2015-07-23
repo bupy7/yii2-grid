@@ -2,8 +2,10 @@
 
 namespace bupy7\grid;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\grid\DataColumn;
 
 /**
  * Simple extended \yii\grid\GridView.
@@ -181,6 +183,15 @@ HTML;
      * @inheritdoc
      */
     public $tableOptions = [];
+    /**
+     * @var false|array Content list name attributes which must be displays in grid. 
+     * Whether `false` will be visible all columns from `columns` list. 
+     * Example:
+     * ~~~
+     * ['id', 'username', 'email]
+     * ~~~
+     */
+    public $visibleColumns = false;
     
     /**
      * @inheritdoc
@@ -297,6 +308,42 @@ HTML;
                 '</tfoot>' => $this->generateRows($this->afterFooter) . "\n</tfoot>",
             ]
         );
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function initColumns()
+    {
+        $visibleColumns = false;
+        if (is_array($this->visibleColumns)) {
+            $visibleColumns = array_fill_keys($this->visibleColumns, true);
+        }
+        if (empty($this->columns)) {
+            $this->guessColumns();
+        }
+        foreach ($this->columns as $i => $column) {
+            if (is_string($column)) {
+                $column = $this->createDataColumn($column);
+            } else {
+                $column = Yii::createObject(array_merge([
+                    'class' => $this->dataColumnClass ? : DataColumn::className(),
+                    'grid' => $this,
+                ], $column));
+            }
+            if (
+                !$column->visible 
+                || (
+                    $visibleColumns !== false 
+                    && $column instanceof DataColumn 
+                    && !isset($visibleColumns[$column->attribute])
+                )
+            ) {
+                unset($this->columns[$i]);
+                continue;
+            }
+            $this->columns[$i] = $column;
+        }
     }
     
     /**
