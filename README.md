@@ -11,7 +11,11 @@ Simple extended ```\yii\grid\GridView```.
 - Custom tags of template the GridView.
 - Ability add/remove visible columns of real-time.
 
-![Screenshot](screenshot.png)
+![Screenshot1](screenshot1.png)
+
+![Screenshot2](screenshot2.png)
+
+![Screenshot3](screenshot3.png)
 
 Installation
 ------------
