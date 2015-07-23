@@ -9,7 +9,7 @@ Simple extended ```\yii\grid\GridView```.
 - Column of 'Total' with ability using custom formulas.
 - Hard-header.
 - Custom tags of template the GridView.
-- Ability added/remove visible columns of real-time.
+- Ability add/remove visible columns of real-time.
 
 ![Screenshot](screenshot.png)
 
