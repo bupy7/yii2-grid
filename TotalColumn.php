@@ -3,7 +3,6 @@
 namespace bupy7\grid;
 
 use Closure;
-use yii\grid\DataColumn;
 use yii\helpers\ArrayHelper;
 
 /**

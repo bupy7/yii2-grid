@@ -192,6 +192,10 @@ HTML;
      * ~~~
      */
     public $visibleColumns = false;
+    /**
+     * @inheritdoc
+     */
+    public $dataColumnClass = 'bupy7\grid\DataColumn';
     
     /**
      * @inheritdoc
