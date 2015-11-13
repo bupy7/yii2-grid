@@ -151,8 +151,8 @@ Adding your config of application:
 
 ```php
 'components' => [
-    'gridSettings' => [
-        'class' => 'bupy7\grid\components\GridSettings',
+    'gridManager' => [
+        'class' => 'bupy7\grid\components\Manager',
         'storage' => 'session',
     ],
 ]
@@ -181,7 +181,7 @@ public function actionIndex()
     $searchModel = new ExampleSearch();
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-    $visibleColumns = Yii::$app->gridSettings->getVisibleColumns('example-grid');
+    $visibleColumns = Yii::$app->gridManager->getVisibleColumns('example-grid');
 
     return $this->render('index', [
         'searchModel' => $searchModel,
