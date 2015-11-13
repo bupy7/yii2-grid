@@ -1,6 +1,6 @@
 yii2-grid
 =========
-Simple extended ```\yii\grid\GridView```.
+Simple extended `yii\grid\GridView`.
 
 **Functional:**
 
@@ -131,12 +131,29 @@ public function actionDelete($id = null)
 
 ### Adding ability change visible columns
 
+#### Via session
+
+Override session component:
+
+```php
+use bupy7\grid\interfaces\StorageInterface;
+
+/**
+ * @inheritdoc
+ */
+class Session extends \yii\web\Session implements StorageInterface
+{
+
+}
+```
+
 Adding your config of application:
 
 ```php
 'components' => [
     'gridSettings' => [
         'class' => 'bupy7\grid\components\GridSettings',
+        'storage' => 'session',
     ],
 ]
 ```
@@ -176,8 +193,8 @@ public function actionIndex()
 
 Adding your search model:
 
-```
-publuc function gridColumnsList()
+```php
+public function gridColumnsList()
 {
     return [
         'attribute1' => 'Label of attribute1',
@@ -215,7 +232,7 @@ echo GridView::widget([
 ]);
 ```
 
-Adding your ```_controls``` view:
+Adding your `_controls` view:
 
 ```php
 use bupy7\grid\widgets\VisibleColumnsWidget;
@@ -251,7 +268,7 @@ echo GridView::widget([
 ]);
 ```
 
-More information to ```bupy7\grid\LinkPageSizer```.
+More information to `bupy7\grid\LinkPageSizer`.
 
 ### Adding total column of grid
 
@@ -265,11 +282,11 @@ Added sum total:
 ]
 ```
 
-More information to ```bupy7\grid\TotalColumn```.
+More information to `bupy7\grid\TotalColumn`.
 
 --------------------------------------------------------------------------------
 
-More information about ```GridView``` to ```bupy7\grid\GridView```.
+More information about `GridView` to `bupy7\grid\GridView`.
 
 ##License
 
