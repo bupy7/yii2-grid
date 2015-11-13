@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\di\Instance;
-use bupy7\grid\components\GridSettings;
+use bupy7\grid\interfaces\ManagerInterface;
 use yii\helpers\Url;
 
 /**
@@ -26,9 +26,9 @@ class VisibleColumnsAction extends Action
      */
     public $gridId;
     /**
-     * @var array|string|GridSettings the grid settings used for set/get actual visible columns of $gridId.
+     * @var array|string|ManagerInterface the grid settings used for set/get actual visible columns of $gridId.
      */
-    public $gridSettings = 'gridSettings';
+    public $gridManager = 'gridManager';
     /**
      * @var mixed URL of redirect. If this property not set, will be used goBack().
      */
@@ -41,10 +41,10 @@ class VisibleColumnsAction extends Action
     public function init()
     {
         parent::init();
-        if (empty($this->gridId) || empty($this->gridSettings)) {
-            throw new InvalidConfigException('Property "gridId" and "gridSettings" must be specified.');
+        if (empty($this->gridId) || empty($this->gridManager)) {
+            throw new InvalidConfigException('Property "gridId" and "gridManager" must be specified.');
         }
-        $this->gridSettings = Instance::ensure($this->gridSettings, GridSettings::className());
+        $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
         if (!isset($this->redirectUrl)) {
             $this->redirectUrl = Url::previous();
         }
@@ -76,7 +76,7 @@ class VisibleColumnsAction extends Action
                 $visibleColumns[] = $column;
             }
         }
-        $this->gridSettings->setVisibleColumns($this->gridId, $visibleColumns);
+        $this->gridManager->setVisibleColumns($this->gridId, $visibleColumns);
     }
     
     /**

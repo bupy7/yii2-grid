@@ -5,7 +5,7 @@ namespace bupy7\grid\widgets;
 use yii\base\Widget;
 use yii\base\InvalidConfigException;
 use yii\di\Instance;
-use bupy7\grid\components\GridSettings;
+use bupy7\grid\interfaces\ManagerInterface;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
@@ -25,9 +25,10 @@ class VisibleColumnsWidget extends Widget
      */
     public $gridId;
     /**
-     * @var array|string|GridSettings the grid settings used for set/get actual visible columns of $gridId.
+     * @var array|string|ManagerInterface the grid settings used for set/get actual visible columns of $gridId.
+     * @since 1.1.0
      */
-    public $gridSettings = 'gridSettings';
+    public $gridManager = 'gridManager';
     /**
      * @var array Modal window widget options.
      * @see \yii\bootstrap\Modal
@@ -75,10 +76,10 @@ class VisibleColumnsWidget extends Widget
     public function init()
     {
         parent::init();
-        if (empty($this->gridId) || empty($this->gridSettings)) {
-            throw new InvalidConfigException('Property "gridId" and "gridSettings" must be specified.');
+        if (empty($this->gridId) || empty($this->gridManager)) {
+            throw new InvalidConfigException('Property "gridId" and "gridManager" must be specified.');
         }
-        $this->gridSettings = Instance::ensure($this->gridSettings, GridSettings::className());
+        $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
     }
     
     /**
@@ -86,7 +87,7 @@ class VisibleColumnsWidget extends Widget
      */
     public function run()
     {
-        $visibleColumns = $this->gridSettings->getVisibleColumns($this->gridId);
+        $visibleColumns = $this->gridManager->getVisibleColumns($this->gridId);
         if ($visibleColumns === false) {
             $visibleColumns = array_keys($this->columnsList);
         }       
