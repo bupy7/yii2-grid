@@ -3,7 +3,7 @@
 namespace bupy7\grid\components;
 
 /**
- * Manager of grid.
+ * Grid manager.
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.1.0
  */
@@ -14,7 +14,8 @@ class Manager extends BaseManager
      */
     public function setVisibleColumns($gridId, $columns)
     {
-        $this->storage->set($this->getStorageKey($gridId), serialize($columns));
+        $key = $this->getStorageKey([$gridId, 'visible-columns']);
+        $this->storage->set($key, serialize($columns));
     }
     
     /**
@@ -22,7 +23,7 @@ class Manager extends BaseManager
      */
     public function getVisibleColumns($gridId)
     {
-        $key = $this->getStorageKey($gridId);
+        $key = $this->getStorageKey([$gridId, 'visible-columns']);
         if ($this->storage->has($key)) {
             $columns = @unserialize($this->storage->get($key));
             if (!is_array($columns)) {

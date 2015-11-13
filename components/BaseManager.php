@@ -8,14 +8,15 @@ use yii\di\Instance;
 use bupy7\grid\interfaces\StorageInterface;
 
 /**
- * 
+ * Manager class of grid which that implement of ManagerInterface.
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.1.0
  */
 abstract class BaseManager extends Component implements ManagerInterface
 {
     /**
-     * @var string|array|StorageInterface
+     * @var string|array|StorageInterface A place to store the setting and follow-up with this.
+     * You can pointer name of component, configuration array or instance of which implement from StorageInterface.
      */
     public $storage;
     
@@ -29,11 +30,11 @@ abstract class BaseManager extends Component implements ManagerInterface
     }
     
     /**
-     * Generation and returned storage key.
-     * @param string $name Name of key.
-     * @return string
+     * Generation and returned storage key for indentified the data.
+     * @param mixed $name Name of storage data.
+     * @return mixed
      */
-    protected function getStorageKey($name)
+    public function getStorageKey($name)
     {
         return md5(serialize([__CLASS__, $name]));
     }
