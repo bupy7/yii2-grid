@@ -11,20 +11,10 @@
             "email": "bupy765@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "name": "bower-asset/sortable",
-            "version": "master",
-            "source": {
-                "url": "git://github.com/rubaxa/Sortable.git",
-                "type": "git"
-            }
-        }
-    ],
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
-        "bower-asset/Sortable": "1.4.2"
+        "RubaXa/Sortable": "1.4.2"
     },
     "autoload": {
         "psr-4": {
