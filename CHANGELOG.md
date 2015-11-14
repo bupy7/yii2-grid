@@ -1,5 +1,9 @@
 # yii2-grid
 
+## v1.1.1 [2015-11-15]
+
+- Added ability ordering of visible a columns.
+
 ## v1.1.0 [2015-11-13]
 
 - Added ability realization custom storage (session, database and etc).

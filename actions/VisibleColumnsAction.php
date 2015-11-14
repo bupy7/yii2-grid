@@ -27,6 +27,7 @@ class VisibleColumnsAction extends Action
     public $gridId;
     /**
      * @var array|string|ManagerInterface the grid settings used for set/get actual visible columns of $gridId.
+     * @since 1.1.0
      */
     public $gridManager = 'gridManager';
     /**

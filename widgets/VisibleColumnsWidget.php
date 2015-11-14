@@ -80,6 +80,7 @@ class VisibleColumnsWidget extends Widget
             throw new InvalidConfigException('Property "gridId" and "gridManager" must be specified.');
         }
         $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
+        VisibleColumnsAsset::register($this->view);
     }
     
     /**
@@ -93,7 +94,7 @@ class VisibleColumnsWidget extends Widget
         }       
         Modal::begin($this->modalOptions);
         echo Html::beginForm($this->actionForm, $this->methodForm, $this->formOptions);
-        echo Html::checkboxList('columns', $visibleColumns, $this->columnsList);
+        echo Html::checkboxList('columns', $visibleColumns, $this->columnsList, ['class' => 'checkbox']);
         echo Html::beginTag('div', ['class' => 'form-group']);
         echo Html::submitButton($this->submitBtnLabel, $this->submitBtnOptions);
         echo Html::endTag('div');

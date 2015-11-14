@@ -321,12 +321,14 @@ HTML;
     {
         $visibleColumns = false;
         if (is_array($this->visibleColumns)) {
-            $visibleColumns = array_fill_keys($this->visibleColumns, true);
+            $visibleColumns = array_flip($this->visibleColumns);
         }
         if (empty($this->columns)) {
             $this->guessColumns();
         }
-        foreach ($this->columns as $i => $column) {
+        $columns = $this->columns;
+        $this->columns = [];
+        foreach ($columns as $column) {
             if (is_string($column)) {
                 $column = $this->createDataColumn($column);
             } else {
@@ -335,18 +337,19 @@ HTML;
                     'grid' => $this,
                 ], $column));
             }
-            if (
-                !$column->visible 
-                || (
-                    $visibleColumns !== false 
-                    && $column instanceof DataColumn 
-                    && !isset($visibleColumns[$column->attribute])
-                )
-            ) {
-                unset($this->columns[$i]);
-                continue;
+            if ($column->visible) {
+                $key = count($this->columns) - 1;
+                if ($visibleColumns !== false) {
+                    if ($column instanceof DataColumn) {
+                        if (isset($visibleColumns[$column->attribute])) {
+                            $key = $visibleColumns[$column->attribute];
+                        } else {
+                            continue;
+                        }
+                    }                   
+                }
+                $this->columns[$key] = $column;
             }
-            $this->columns[$i] = $column;
         }
     }
     

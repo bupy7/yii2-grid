@@ -1,19 +1,34 @@
 {
     "name": "bupy7/yii2-grid",
-    "description": "Simple extended \\yii\\grid\\GridView.",
+    "description": "Simple extended `yii\\grid\\GridView` with buns.",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","module","grid","gridview"],
+    "keywords": ["yii2","extension","module","grid","grid view"],
     "license": "BSD-3-Clause",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "authors": [
         {
             "name": "Vasilij Belosludcev",
             "email": "bupy765@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "package": {
+                "name": "bower-asset/sortable",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/RubaXa/Sortable",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
     "require": {
         "yiisoft/yii2": "*",
-        "yiisoft/yii2-bootstrap": "*"
+        "yiisoft/yii2-bootstrap": "*",
+        "bower-asset/Sortable": "1.4.2"
     },
     "autoload": {
         "psr-4": {
