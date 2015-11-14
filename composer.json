@@ -13,15 +13,11 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "package": {
-                "name": "bower-asset/sortable",
-                "version": "master",
-                "source": {
-                    "url": "https://github.com/RubaXa/Sortable",
-                    "type": "git",
-                    "reference": "master"
-                }
+            "name": "bower-asset/sortable",
+            "version": "master",
+            "source": {
+                "url": "git://github.com/rubaxa/Sortable.git",
+                "type": "git"
             }
         }
     ],
