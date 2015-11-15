@@ -326,9 +326,9 @@ HTML;
         if (empty($this->columns)) {
             $this->guessColumns();
         }
-        $columns = $this->columns;
-        $this->columns = [];
-        foreach ($columns as $column) {
+        $dataColumns = [];
+        $serviceColumns = [];
+        foreach ($this->columns as $i => $column) {
             if (is_string($column)) {
                 $column = $this->createDataColumn($column);
             } else {
@@ -338,19 +338,29 @@ HTML;
                 ], $column));
             }
             if ($column->visible) {
-                $key = count($this->columns) - 1;
+                $key = $i;
                 if ($visibleColumns !== false) {
                     if ($column instanceof DataColumn) {
                         if (isset($visibleColumns[$column->attribute])) {
                             $key = $visibleColumns[$column->attribute];
                         } else {
                             continue;
-                        }
-                    }                   
+                        }             
+                    } else {
+                        $serviceColumns[$i] = $column;
+                        continue;
+                    }
                 }
-                $this->columns[$key] = $column;
+                $dataColumns[$key] = $column;
             }
         }
+        ksort($dataColumns);
+        foreach ($serviceColumns as $i => $column) {
+            $tmp = array_slice($dataColumns, 0, $i);
+            $tmp[] = $column;
+            $dataColumns = array_merge($tmp, array_slice($dataColumns, $i));
+        }
+        $this->columns = $dataColumns;
     }
     
     /**

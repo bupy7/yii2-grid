@@ -9,7 +9,7 @@ Simple extended `yii\grid\GridView`.
 - Column of 'Total' with ability using custom formulas.
 - Hard-header.
 - Custom tags of template the GridView.
-- Ability add/remove visible columns of real-time.
+- Ability disabling/enabling/sort visible columns of real-time.
 
 ![Screenshot1](screenshot1.png)
 
@@ -182,6 +182,9 @@ public function actionIndex()
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
     $visibleColumns = Yii::$app->gridManager->getVisibleColumns('example-grid');
+    if ($visibleColumns === false) {
+        $visibleColumns = array_keys($searchModel->gridColumnsList());
+    }
 
     return $this->render('index', [
         'searchModel' => $searchModel,

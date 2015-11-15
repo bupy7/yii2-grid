@@ -8,6 +8,8 @@ use yii\di\Instance;
 use bupy7\grid\interfaces\ManagerInterface;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
+use bupy7\grid\assets\SortableAsset;
+use yii\helpers\Json;
 
 /**
  * Generation of modal window with list of available columns for selecting need to visible.
@@ -68,6 +70,12 @@ class VisibleColumnsWidget extends Widget
      * @see Html::submitButton()
      */
     public $submitBtnOptions = ['class' => 'btn btn-primary'];
+    /**
+     * @var array Options of Sortable plugin.
+     * @see https://github.com/RubaXa/Sortable
+     * @since 1.1.1
+     */
+    public $pluginSortableOptions = [];
     
     /**
      * @inheritdoc
@@ -80,7 +88,7 @@ class VisibleColumnsWidget extends Widget
             throw new InvalidConfigException('Property "gridId" and "gridManager" must be specified.');
         }
         $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
-        VisibleColumnsAsset::register($this->view);
+        SortableAsset::register($this->view);
     }
     
     /**
@@ -92,14 +100,25 @@ class VisibleColumnsWidget extends Widget
         if ($visibleColumns === false) {
             $visibleColumns = array_keys($this->columnsList);
         }       
-        Modal::begin($this->modalOptions);
+        $columnsList = [];
+        for ($i = 0; $i != count($visibleColumns); $i++) {
+            $key = $visibleColumns[$i];
+            if (isset($this->columnsList[$key])) {
+                $columnsList[$key] = $this->columnsList[$key];
+                unset($this->columnsList[$key]);
+            }
+        }
+        $columnsList = array_merge($columnsList, $this->columnsList);
+        $modal = Modal::begin($this->modalOptions);
         echo Html::beginForm($this->actionForm, $this->methodForm, $this->formOptions);
-        echo Html::checkboxList('columns', $visibleColumns, $this->columnsList, ['class' => 'checkbox']);
+        echo Html::checkboxList('columns', $visibleColumns, $columnsList, ['class' => 'checkbox columns-list']);
         echo Html::beginTag('div', ['class' => 'form-group']);
         echo Html::submitButton($this->submitBtnLabel, $this->submitBtnOptions);
         echo Html::endTag('div');
         echo Html::endForm();
         Modal::end();
+        $pluginSortableOptions = Json::encode($this->pluginSortableOptions);
+        $this->view->registerJs("jQuery('#{$modal->id} .columns-list').sortable({$pluginSortableOptions});");
     }
 }
 

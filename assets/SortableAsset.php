@@ -1,6 +1,6 @@
 <?php
 
-namespace bupy7\grid\widgets;
+namespace bupy7\grid\assets;
 
 use yii\web\AssetBundle;
 
@@ -16,7 +16,7 @@ class SortableAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@bower/Sortable/';
+    public $sourcePath = '@npm/sortablejs';
     /**
      * @inheritdoc
      */
@@ -28,6 +28,6 @@ class SortableAsset extends AssetBundle
      * @inheritdoc
      */
     public $depends = [
-        'yii\web\YiiAsset',
+        'yii\web\jQueryAsset',
     ];
 }
