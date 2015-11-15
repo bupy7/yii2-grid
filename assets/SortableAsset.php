@@ -28,6 +28,6 @@ class SortableAsset extends AssetBundle
      * @inheritdoc
      */
     public $depends = [
-        'yii\web\jQueryAsset',
+        'yii\web\JqueryAsset',
     ];
 }
