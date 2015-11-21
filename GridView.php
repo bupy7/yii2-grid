@@ -61,7 +61,7 @@ class GridView extends \yii\grid\GridView
     public $panelTemplate = <<<HTML
 <div class="panel {type}">
     {panelHeading}
-    {items}
+    <div class="panel-body">{items}</div>
     {panelFooter}
 </div>
 HTML;
