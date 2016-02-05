@@ -10,7 +10,7 @@
             "name": "Vasilij Belosludcev",
             "email": "bupy765@gmail.com"
         }
-    ],,
+    ],
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
