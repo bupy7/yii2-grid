@@ -14,8 +14,7 @@
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
-        "npm-asset/sortablejs": "1.4.2",
-        "bower-asset/jquery-resizable": "0.15.0"
+        "npm-asset/sortablejs": "1.4.2"
     },
     "autoload": {
         "psr-4": {
