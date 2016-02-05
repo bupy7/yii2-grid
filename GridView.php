@@ -6,7 +6,10 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\DataColumn;
-use bupy7\grid\assets\ResizableAsset;
+use yii\widgets\BaseListView;
+use bupy7\grid\assets\GridViewAsset;
+use yii\helpers\Json;
+use yii\grid\GridView as BaseGridView;
 
 /**
  * Simple extended `yii\grid\GridView`.
@@ -14,7 +17,7 @@ use bupy7\grid\assets\ResizableAsset;
  * @author Vasilij Belosludcev https://github.com/bupy7
  * @since 1.0.0
  */
-class GridView extends \yii\grid\GridView
+class GridView extends BaseGridView
 {
     /**
      * Type of panel `default`.
@@ -214,8 +217,12 @@ HTML;
             Html::addCssClass($this->tableOptions, 'table-striped');
         }
         $this->initLayout();
-        parent::run();
-        ResizableAsset::register($this->view);
+        $id = $this->options['id'];
+        $options = Json::htmlEncode($this->getClientOptions());
+        $view = $this->getView();
+        GridViewAsset::register($view);
+        $view->registerJs("jQuery('#$id').yiiGridView($options);");
+        BaseListView::run();
     }
     
     /**

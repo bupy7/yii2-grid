@@ -6,35 +6,30 @@ use Yii;
 use yii\web\AssetBundle;
 
 /**
- * Assets of jQuery plugin `resizable`.
- * Home page: https://github.com/tannernetwork/resizable
+ * GridView assets files.
  * 
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.1.3
  */
-class ResizableAsset extends AssetBundle
+class GridViewAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@npm/jquery-resizable';
-    /**
-     * @inheritdoc
-     */
+    public $sourcePath = '@bupy7/grid/resources';
     public $js = [
-        'resizable.js',
+        'js/resizable-columns.min.js',
     ];
     /**
      * @inheritdoc
      */
     public $css = [
-        'resizable.css',
+        'css/resizable-columns.min.css',
     ];
     /**
      * @inheritdoc
      */
     public $depends = [
-        'yii\web\JqueryAsset',
+        'yii\grid\GridViewAsset',
     ];
 }
-
