@@ -211,6 +211,7 @@ HTML;
      *      //and etc
      * ]
      * ~~~
+     * @since 1.1.3
      */
     public $resizableColumns = false;
     
