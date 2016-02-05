@@ -42,10 +42,7 @@
             var pos = getMousePos(event),
                 newWidth = startPos.width + pos.x - startPos.x; 
             
-            event.data.css({
-                width: newWidth,
-                minWidth: newWidth
-            });
+            event.data.css({minWidth: newWidth});
         },
         stopDragging = function(event) {    
             noop(event);
@@ -82,7 +79,7 @@
             event.preventDefault();
         };
    
-    $.fn.gridResizableColumns = function(options) {       
+    $.fn.resizableColumns = function(options) {       
         if (methods[options]) {
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof options === 'object' || ! options) {

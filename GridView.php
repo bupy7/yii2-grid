@@ -188,7 +188,7 @@ HTML;
      */
     public $tableOptions = [];
     /**
-     * @var false|array Content list name attributes which must be displays in grid. 
+     * @var false|array Contain list name attributes which must be displays in grid. 
      * Whether `false` will be visible all columns from `columns` list. 
      * Example:
      * ~~~
@@ -200,6 +200,19 @@ HTML;
      * @inheritdoc
      */
     public $dataColumnClass = 'bupy7\grid\DataColumn';
+    /**
+     * @var false|array Contain key-value pairs width of columns where `key` is attribute and `value` is 
+     * width of column at `px`. In case set as `false` then it function not used.
+     * Example:
+     * ~~~
+     * [
+     *      'id' => '200',
+     *      'username' => '123',
+     *      //and etc
+     * ]
+     * ~~~
+     */
+    public $resizableColumns = false;
     
     /**
      * @inheritdoc
@@ -363,13 +376,36 @@ HTML;
                 $dataColumns[$key] = $column;
             }
         }
-        ksort($dataColumns);
-        foreach ($serviceColumns as $i => $column) {
-            $tmp = array_slice($dataColumns, 0, $i);
-            $tmp[] = $column;
-            $dataColumns = array_merge($tmp, array_slice($dataColumns, $i));
+        if ($this->resizableColumns !== false) {
+            foreach ($dataColumns as $column) {
+                $column->headerOptions['data-resizable-column'] = $column->attribute;
+                if (isset($this->resizableColumns[$column->attribute])) { 
+                    Html::addCssStyle($column->headerOptions, [
+                        'min-width' => $this->resizableColumns[$column->attribute] . 'px',
+                    ]);
+                }
+            }
         }
-        $this->columns = $dataColumns;
+        $this->columns = $this->mergeColumns($dataColumns, $serviceColumns);
+    }
+    
+    /**
+     * Sorting and ordering columns by specific criteria.
+     * @param array $dataColumns Array of columns DataColumn instance.
+     * @param array $serviceColumns Array of columns with other class instance.
+     * @return array
+     * @since 1.1.3
+     */
+    protected function mergeColumns(array $dataColumns, array $serviceColumns)
+    {
+        $columns = $dataColumns;
+        ksort($columns);
+        foreach ($serviceColumns as $i => $column) {
+            $tmp = array_slice($columns, 0, $i);
+            $tmp[] = $column;
+            $columns = array_merge($tmp, array_slice($columns, $i));
+        }
+        return $columns;
     }
     
     /**
