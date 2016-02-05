@@ -16,11 +16,11 @@
             "type": "package",
             "package": {
                 "name": "alvaro-prieto/colResizable",
-                "version": "1.5.0",
+                "version": "1.5",
                 "source": {
                     "url": "https://github.com/alvaro-prieto/colResizable",
                     "type": "git",
-                    "reference": "1.5"
+                    "reference": "1.5.0"
                 }
             }
         }
