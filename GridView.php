@@ -6,9 +6,10 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\DataColumn;
+use bupy7\grid\assets\ResizableAsset;
 
 /**
- * Simple extended \yii\grid\GridView.
+ * Simple extended `yii\grid\GridView`.
  * 
  * @author Vasilij Belosludcev https://github.com/bupy7
  * @since 1.0.0
@@ -214,6 +215,7 @@ HTML;
         }
         $this->initLayout();
         parent::run();
+        ResizableAsset::register($this->view);
     }
     
     /**
