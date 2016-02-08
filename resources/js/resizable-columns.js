@@ -1,26 +1,31 @@
 /**
- * Resizable GridView columns.
+ * Resizable table columns jQuery plugin.
+ * Options (optional):
+ * - `selector` (string): CSS relative path to header columns of table.
  * @author Vasilij Belosludcev <https://github.com/bupy7>
  * @since 1.1.3
  */
 'use strict';
-
 (function($) {   
     // constants
     var EVENT_MOUSE_DOWN = 'mousedown', 
         EVENT_MOUSE_UP = 'mouseup',
         EVENT_MOUSE_MOVE = 'mousemove',
-        EVENT_AFTER_DRAGGING = 'afterDragging.grid.rc';
+        EVENT_AFTER_DRAGGING = 'afterDragging.rc';
     // protected properties
     var startPos = null,
         $document = $(document),
         $body = $('body');
     // public methods
     var methods = {
-        init: function() {
-            return this.each(function () {  
+        init: function(options) {
+            var $columns = this;
+            if (typeof options.selector != 'undefined') {
+                $columns = this.find(options.selector);
+            }
+            return $columns.each(function () {  
                 var $th = $(this);
-
+                
                 $th
                     .prepend($('<div class="resizer"></div>').on(EVENT_MOUSE_DOWN, $th, startDragging))
                     .addClass('resizable-columns');

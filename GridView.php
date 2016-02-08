@@ -10,6 +10,7 @@ use yii\widgets\BaseListView;
 use bupy7\grid\assets\GridViewAsset;
 use yii\helpers\Json;
 use yii\grid\GridView as BaseGridView;
+use yii\helpers\Url;
 
 /**
  * Simple extended `yii\grid\GridView`.
@@ -214,6 +215,18 @@ HTML;
      * @since 1.1.3
      */
     public $resizableColumns = false;
+    /**
+     * @var array Options of resizable columns plugin.
+     * List options:
+     * - `selector` (string): CSS relative path to header columns of table.  
+     */
+    public $resizableColumnsOptions = [
+        'selector' => 'tr > th[data-resizable-column], tr > td[data-resizable-column]',
+    ];
+    /**
+     * @var array|string URL to action for save width of resizable column after changes it.
+     */
+    public $resizableColumnsUrl = ['url/to/action'];
     
     /**
      * @inheritdoc
@@ -231,11 +244,29 @@ HTML;
             Html::addCssClass($this->tableOptions, 'table-striped');
         }
         $this->initLayout();
-        $id = $this->options['id'];
+        
+        GridViewAsset::register($this->view);
+        
         $options = Json::htmlEncode($this->getClientOptions());
-        $view = $this->getView();
-        GridViewAsset::register($view);
-        $view->registerJs("jQuery('#$id').yiiGridView($options);");
+        $this->view->registerJs("$('#{$this->options['id']}').yiiGridView({$options});");
+        
+        if ($this->resizableColumns !== false) {
+            $options = Json::htmlEncode($this->resizableColumnsOptions);
+            $url = Url::toRoute($this->resizableColumnsUrl);
+            $js = <<<JS
+$('#{$this->options['id']}').resizableColumns({$options}).on('afterDragging.rc', function(event) {
+    var column = $(this).closest('[data-resizable-column]'),
+        data = {};
+    data[column.data('resizable-column')] = column.outerWidth();
+    $.ajax({
+        type: 'post',
+        url: '{$url}',
+        data: data
+    });
+});
+JS;
+            $this->view->registerJs($js);
+        }
         BaseListView::run();
     }
     

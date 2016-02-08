@@ -1,10 +1,14 @@
 # yii2-grid
 ===========
 
-v1.1.3 [2016-02-??]
+v1.1.3 [2016-02-08]
 -------------------
 
 - Added ability resizing columns.
+- Add class action `bupy7\grid\actions\ResizableColumnsAction`.
+- Moved base functional of grid actions to `bupy7\grid\base\BaseAction`.
+- Moved screenshots to `docs` directory.
+- Release of `resizable columns jQuery plugin` to Grid. 
 
 v1.1.2 [2015-11-21]
 -------------------

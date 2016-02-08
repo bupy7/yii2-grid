@@ -10,12 +10,13 @@ Simple extended `yii\grid\GridView`.
 - Hard-header.
 - Custom tags of template the GridView.
 - Ability disabling/enabling/sort visible columns of real-time.
+- Ability resize width of columns.
 
-![Screenshot1](screenshot1.png)
+![Screenshot1](docs/screenshot1.png)
 
-![Screenshot2](screenshot2.png)
+![Screenshot2](docs/screenshot2.png)
 
-![Screenshot3](screenshot3.png)
+![Screenshot3](docs/screenshot3.png)
 
 Installation
 ------------
@@ -254,6 +255,88 @@ use bupy7\grid\widgets\VisibleColumnsWidget;
     'columnsList' => $searchModel->gridColumnsList(),
 ]); ?>
 ```
+
+### Adding ability resize width of columns
+
+#### Via session
+
+Override session component:
+
+```php
+use bupy7\grid\interfaces\StorageInterface;
+
+/**
+ * @inheritdoc
+ */
+class Session extends \yii\web\Session implements StorageInterface
+{
+
+}
+```
+
+Adding your config of application:
+
+```php
+'components' => [
+    'gridManager' => [
+        'class' => 'bupy7\grid\components\Manager',
+        'storage' => 'session',
+    ],
+]
+```
+
+Adding your controller:
+
+```php
+use bupy7\grid\actions\ResizableColumnsAction;
+use yii\helpers\Url;
+
+public function actions()
+{
+    return parent::actions() + [
+        'resizable-columns' => [
+            'class' => ResizableColumnsAction::className(),
+            'gridId' => 'example-grid', 
+        ],
+    ];
+}
+
+public function actionIndex()
+{
+    Url::remember();
+
+    $searchModel = new ExampleSearch();
+    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+    $visibleColumns = Yii::$app->gridManager->getResizableColumns('example-grid');
+
+    return $this->render('index', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'resizableColumns' => $resizableColumns,
+        'resizableColumnsUrl' => ['resizable-columns'],
+    ]);
+}
+```
+
+Adding your view:
+
+```php
+use bupy7\grid\GridView;
+
+echo GridView::widget([
+    'resizableColumns' => $resizableColumns,
+    'resizableColumnsUrl' => $resizableColumns,
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'columns' => [
+        ['class' => 'yii\grid\SerialColumn'],
+        'attribute1',
+        'attribute2',
+    ],
+]);
+```
+
 
 ### Adding ability display all rows of grid
 

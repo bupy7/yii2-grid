@@ -3,10 +3,7 @@
 namespace bupy7\grid\actions;
 
 use Yii;
-use yii\base\Action;
-use yii\base\InvalidConfigException;
-use yii\di\Instance;
-use bupy7\grid\interfaces\ManagerInterface;
+use bupy7\grid\base\BaseAction;
 use yii\helpers\Url;
 
 /**
@@ -15,21 +12,8 @@ use yii\helpers\Url;
  * @author Belosludcev Vasilij <https://github.com/bupy7>
  * @since 1.0.0
  */
-class VisibleColumnsAction extends Action
+class VisibleColumnsAction extends BaseAction
 {    
-    /**
-     * @var mixed Uniqal ID of grid. You can uses not only string, but also other types of variable.
-     * Example:
-     * ~~~
-     * 'main-grid'
-     * ~~~
-     */
-    public $gridId;
-    /**
-     * @var array|string|ManagerInterface the grid settings used for set/get actual visible columns of $gridId.
-     * @since 1.1.0
-     */
-    public $gridManager = 'gridManager';
     /**
      * @var mixed URL of redirect. If this property not set, will be used goBack().
      */
@@ -37,15 +21,10 @@ class VisibleColumnsAction extends Action
     
     /**
      * @inheritdoc
-     * @throws InvalidConfigException
      */
     public function init()
     {
         parent::init();
-        if (empty($this->gridId) || empty($this->gridManager)) {
-            throw new InvalidConfigException('Property "gridId" and "gridManager" must be specified.');
-        }
-        $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
         if (!isset($this->redirectUrl)) {
             $this->redirectUrl = Url::previous();
         }
@@ -66,7 +45,7 @@ class VisibleColumnsAction extends Action
     }
     
     /**
-     * Save settings of visible columns to session of user.
+     * Save settings of visible columns to storage of user.
      * @param array $params Body params of request.
      */
     protected function saveSettings($params)

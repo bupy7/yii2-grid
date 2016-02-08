@@ -33,4 +33,29 @@ class Manager extends BaseManager
         }
         return false;
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function setResizableColumns($gridId, $columns)
+    {
+        $key = $this->getStorageKey([$gridId, 'resizable-columns']);
+        $this->storage->set($key, serialize($columns));
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getResizableColumns($gridId)
+    {
+        $key = $this->getStorageKey([$gridId, 'resizable-columns']);
+        if ($this->storage->has($key)) {
+            $columns = @unserialize($this->storage->get($key));
+            if (!is_array($columns)) {
+                return [];
+            }
+            return $columns;
+        }
+        return [];
+    }
 }
