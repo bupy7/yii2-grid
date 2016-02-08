@@ -413,6 +413,7 @@ JS;
                 $column->headerOptions['data-resizable-column'] = $column->attribute;
                 if (isset($this->resizableColumns[$column->attribute])) { 
                     Html::addCssStyle($column->headerOptions, [
+                        'width' => $this->resizableColumns[$column->attribute] . 'px',
                         'min-width' => $this->resizableColumns[$column->attribute] . 'px',
                     ]);
                 }

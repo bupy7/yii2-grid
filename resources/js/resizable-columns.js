@@ -47,7 +47,10 @@
             var pos = getMousePos(event),
                 newWidth = startPos.width + pos.x - startPos.x; 
             
-            event.data.css({minWidth: newWidth});
+            event.data.css({
+                width: newWidth,
+                minWidth: newWidth
+            });
         },
         stopDragging = function(event) {    
             noop(event);
