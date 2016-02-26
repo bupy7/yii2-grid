@@ -11,6 +11,7 @@ Simple extended `yii\grid\GridView`.
 - Custom tags of template the GridView.
 - Ability disabling/enabling/sort visible columns of real-time.
 - Ability resize width of columns.
+- Keepping last modified page sizer.
 
 ![Screenshot1](docs/screenshot1.png)
 
