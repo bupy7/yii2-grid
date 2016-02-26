@@ -390,7 +390,7 @@ echo GridView::widget([
 ]);
 ```
 
-You necessary setting `id` as unique for correct work.
+You need to specify `id` as unique for correct work.
 
 > `id` and `options[id]` - not the same! `id` it identificator of widget, and 
 `options[id]` it HTML-identificator of grid view.
