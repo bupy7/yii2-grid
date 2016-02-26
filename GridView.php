@@ -11,6 +11,9 @@ use bupy7\grid\assets\GridViewAsset;
 use yii\helpers\Json;
 use yii\grid\GridView as BaseGridView;
 use yii\helpers\Url;
+use yii\di\Instance;
+use bupy7\grid\interfaces\ManagerInterface;
+use yii\data\Pagination;
 
 /**
  * Simple extended `yii\grid\GridView`.
@@ -227,6 +230,27 @@ HTML;
      * @var array|string URL to action for save width of resizable column after changes it.
      */
     public $resizableColumnsUrl = ['url/to/action'];
+    /**
+     * @var ManagerInterface|array|string
+     * @since 1.1.4
+     */
+    public $gridManager = 'gridManager';
+    /**
+     * @var boolean Keeping the page sizer. If set as `true` then last modified page sizer will be keep to 
+     * the storage.
+     * @since 1.1.4
+     */
+    public $keepPageSizer = false;
+    
+    /**
+     * @inheritdoc
+     * @since 1.1.4
+     */
+    public function init()
+    {
+        parent::init();
+        $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
+    }
     
     /**
      * @inheritdoc
@@ -289,7 +313,7 @@ JS;
      */
     public function renderPageSizer()
     {
-        $pagination = $this->dataProvider->getPagination();
+        $pagination = $this->getPagination();
         if ($pagination === false) {
             return '';
         }
@@ -473,5 +497,25 @@ JS;
             }
         }
         return $rows;
+    }
+    
+    /**
+     * @return Pagination|false The pagination object. If this is false, it means the pagination is disabled.
+     * @since 1.1.4
+     */
+    protected function getPagination()
+    {
+        $pagination = $this->dataProvider->getPagination();
+        if ($pagination === false) {
+            return false;
+        }
+        if ($this->keepPageSizer) {
+            $defaultPageSize = $this->gridManager->getDefaultPageSize($this->getId());
+            if ($defaultPageSize !== false) {
+                $pagination->defaultPageSize = $defaultPageSize;
+            }
+            $this->gridManager->setDefaultPageSize($this->getId(), $pagination->getPageSize());
+        }
+        return $pagination;
     }
 }

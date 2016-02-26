@@ -58,4 +58,25 @@ class Manager extends BaseManager
         }
         return [];
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function setDefaultPageSize($gridId, $pageSize)
+    {
+        $key = $this->getStorageKey([$gridId, 'default-page-size']);
+        $this->storage->set($key, serialize($pageSize));        
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getDefaultPageSize($gridId)
+    {
+        $key = $this->getStorageKey([$gridId, 'default-page-size']);
+        if ($this->storage->has($key)) {
+            return @unserialize($this->storage->get($key));
+        }
+        return false;
+    }
 }

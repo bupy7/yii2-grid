@@ -374,6 +374,26 @@ More information to `bupy7\grid\TotalColumn`.
 
 More information about `GridView` to `bupy7\grid\GridView`.
 
+### Keeping last modified the page sizer
+
+By default this function disabled.
+
+```php
+echo GridView::widget([
+    ...
+
+    'id' => 'unique-id-of-this-grid',
+    'keepPageSizer' => true,
+
+    ...
+]);
+```
+
+You necessary setting `id` as unique for correct work.
+
+> `id` and `options[id]` - not the same! `id` it identificator of widget, and 
+`options[id]` it HTML-identificator of grid view.
+
 ##License
 
 yii2-grid is released under the BSD 3-Clause License.

@@ -37,5 +37,21 @@ interface ManagerInterface
      * @since 1.1.3
      */
     public function getResizableColumns($gridId);
+    
+    /**
+     * Save default page size per page.
+     * @param mixed $gridId ID of grid.
+     * @param array $pageSize Default page size.
+     * @since 1.1.4
+     */
+    public function setDefaultPageSize($gridId, $pageSize);
+    
+    /**
+     * Returned default page size per page.
+     * @param mixed $gridId ID of grid.
+     * @return false|integer
+     * @since 1.1.4
+     */
+    public function getDefaultPageSize($gridId);
 }
 
