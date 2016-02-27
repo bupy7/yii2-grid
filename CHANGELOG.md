@@ -1,8 +1,8 @@
 # yii2-grid
 ===========
 
-v1.1.4
-------
+v1.1.4 [2016-02-27]
+-------------------
 
 - Added keep last modified the page sizer.
 
