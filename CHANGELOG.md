@@ -1,6 +1,12 @@
 # yii2-grid
 ===========
 
+v1.1.5 [2017-04-22]
+-------------------
+
+- Added ability formatting a footer value.
+- Fixed `calculateSummary()` method.
+
 v1.1.4 [2016-02-27]
 -------------------
 
