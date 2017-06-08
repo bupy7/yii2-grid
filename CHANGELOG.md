@@ -1,7 +1,7 @@
 # yii2-grid
 ===========
 
-v1.1.6 [2017-06-??]
+v1.1.6 [2017-06-09]
 -------------------
 
 - Fixed #4: README section *Adding ability resize width of columns*. (githubjeka)
