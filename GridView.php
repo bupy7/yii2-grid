@@ -434,6 +434,9 @@ JS;
         }
         if ($this->resizableColumns !== false) {
             foreach ($dataColumns as $column) {
+                if (!($column instanceof DataColumn)) {
+                    continue;
+                }
                 $column->headerOptions['data-resizable-column'] = $column->attribute;
                 if (isset($this->resizableColumns[$column->attribute])) { 
                     Html::addCssStyle($column->headerOptions, [
