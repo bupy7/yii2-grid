@@ -309,7 +309,7 @@ public function actionIndex()
     $searchModel = new ExampleSearch();
     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-    $visibleColumns = Yii::$app->gridManager->getResizableColumns('example-grid');
+    $resizableColumns = Yii::$app->gridManager->getResizableColumns('example-grid');
 
     return $this->render('index', [
         'searchModel' => $searchModel,
@@ -327,7 +327,7 @@ use bupy7\grid\GridView;
 
 echo GridView::widget([
     'resizableColumns' => $resizableColumns,
-    'resizableColumnsUrl' => $resizableColumns,
+    'resizableColumnsUrl' => $resizableColumnsUrl,
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'columns' => [
