@@ -249,7 +249,9 @@ HTML;
     public function init()
     {
         parent::init();
-        $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
+        if ($this->keepPageSizer) {
+            $this->gridManager = Instance::ensure($this->gridManager, 'bupy7\grid\interfaces\ManagerInterface');
+        }
     }
     
     /**

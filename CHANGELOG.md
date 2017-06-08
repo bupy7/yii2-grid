@@ -1,6 +1,15 @@
 # yii2-grid
 ===========
 
+v1.1.6 [2017-06-??]
+-------------------
+
+- Fixed #4: README section *Adding ability resize width of columns*. (githubjeka)
+- Fixed #3: error `unknown property` if column is not `yii\grid\DataColumn` class. (githubjeka)
+- Enhancement: CHANGELOG.
+- Fixed: Failed to instantiate component or class "gridManager".
+- Enhancement #5: Update README section *Adding ability display all rows of grid*.
+
 v1.1.5 [2017-04-22]
 -------------------
 

@@ -351,7 +351,17 @@ echo GridView::widget([
     ],
 
     ...
+]);
+```
 
+And change `$pageSizeLimit` in your model:
+
+```php
+$dataProvider = new ActiveDataProvider([
+    'query' => $query,
+    'pagination' => [
+        'pageSizeLimit' => [-1, 100],
+    ],
 ]);
 ```
 
